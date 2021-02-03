@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "dyn",
+    "name": "Dynamo",
+    "description": "Robust platform for creating unique user experience with many utilities",
+    "version": "0.0.1",
+    "mcversion": "[1.12.2]",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "Edgelord_exe"
+    ],
+    "credits": "Society Project",
+    "logoFile": "DynamoLogo.png",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
