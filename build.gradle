@@ -113,10 +113,15 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
-        
+       
         maven {
             name = 'jcl-core'
             url = 'https://mvnrepository.com/artifact/org.xeustechnologies/jcl-core'
+        }
+
+         maven {
+            name = 'json-simple'
+            url = 'https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple'
         }
     }
 }

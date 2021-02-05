@@ -6,11 +6,13 @@ import group.societyproject.dynamoclient.proxy.ProxyCommon;
 import group.societyproject.dynamoclient.util.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -18,7 +20,8 @@ import java.nio.file.Path;
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, useMetadata = true)
 public class Main {
 
-    public EventHandler handler;
+
+    public CommandHandler commands;
 
     @Mod.Instance
     public Main instance;
@@ -34,10 +37,11 @@ public class Main {
 
     @Mod.EventHandler
     public void Init(FMLInitializationEvent event){
-        MinecraftForge.EVENT_BUS.register(instance);
+
         initDirs();
-        handler = new EventHandler();
-        MinecraftForge.EVENT_BUS.register(handler);
+        commands = new CommandHandler();
+        MinecraftForge.EVENT_BUS.register(instance);
+        MinecraftForge.EVENT_BUS.register(commands);
 
     }
 

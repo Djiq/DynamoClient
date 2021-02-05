@@ -1,10 +1,8 @@
 package group.societyproject.dynamoclient.command.inbuilt_commands;
 
-import group.societyproject.dynamoclient.EventHandler;
 import group.societyproject.dynamoclient.command.Command;
 import group.societyproject.dynamoclient.command.CommandHandler;
 import group.societyproject.dynamoclient.util.Helpers;
-import group.societyproject.dynamoclient.util.Reference;
 
 public class CBuildCommandList extends Command {
 
