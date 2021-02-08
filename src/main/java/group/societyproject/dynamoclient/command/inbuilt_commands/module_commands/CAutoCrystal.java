@@ -2,22 +2,15 @@ package group.societyproject.dynamoclient.command.inbuilt_commands.module_comman
 
 import group.societyproject.dynamoclient.command.Command;
 import group.societyproject.dynamoclient.command.Module;
-import net.minecraft.advancements.ICriterionTrigger;
+import group.societyproject.dynamoclient.util.Helpers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import scala.collection.parallel.ParIterableLike;
 
 import java.util.Comparator;
-
-import static group.societyproject.dynamoclient.util.Helpers.LookAt;
 
 public class CAutoCrystal extends Command {
 
@@ -25,7 +18,7 @@ public class CAutoCrystal extends Command {
 
     @Override
     public String getCallname() {
-        return "CrystalAura";
+        return "crystal-aura";
     }
 
     @Override
@@ -39,7 +32,32 @@ public class CAutoCrystal extends Command {
             module = new AutoCrystal();
         }
 
-        module.toggleState();
+        if(message.equals("")){
+
+            module.toggleState();
+            if(module.isState()){
+                Helpers.sendLocalMessage("Crystal aura was toggled it is now [on] ");
+            } else {
+                Helpers.sendLocalMessage("Crystal aura was toggled it is now [off] ");
+            }
+        }
+
+        if(message.equals("on")){
+            module.setState(true);
+            Helpers.sendLocalMessage("Crystal aura was turned [on]");
+        }
+
+        if(message.equals("off")){
+            module.setState(false);
+            Helpers.sendLocalMessage("Crystal aura was turned [off]");
+        }
+
+        if(message.equals("range")){
+            String number_string = Helpers.emergeWord(message,false);
+            module.range = Integer.parseInt(number_string);
+            Helpers.sendLocalMessage("Crystal aura range is now [" + String.valueOf(module.range) + "]");
+        }
+
 
     }
 
