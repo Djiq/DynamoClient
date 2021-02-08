@@ -6,27 +6,22 @@ import group.societyproject.dynamoclient.util.Helpers;
 
 public class CBuildCommandList extends Command {
 
-    public CBuildCommandList(CommandHandler handler){
-        super(handler);
-    }
 
     @Override
     public String getCallname() {
-        return callname;
+        return "build-cmd";
     }
 
     @Override
     public String getDescription() {
-        return description;
+        return "rebuilds the command list, forcing an update of available commands";
     }
 
-    public String callname = "build-cmd";
-
-    public String description = "rebuilds the command list, forcing an update of available commands";
 
     @Override
     public void digestCommand(String message){
-        parentHandler.BuildCommandList();
+        CommandHandler.getCommandHandler().KillModules();
+        CommandHandler.getCommandHandler().BuildCommandList();
         Helpers.sendLocalMessage("Rebuilding Commands");
     }
 }

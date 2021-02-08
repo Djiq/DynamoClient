@@ -5,28 +5,21 @@ import group.societyproject.dynamoclient.command.CommandHandler;
 import group.societyproject.dynamoclient.util.Helpers;
 
 public class CListCommands extends Command {
-    public CListCommands(CommandHandler handler){
-        super(handler);
-    }
 
     @Override
     public String getCallname() {
-        return callname;
+        return "lsc";
     }
 
     @Override
     public String getDescription() {
-        return description;
+        return "lists all registered commands, if something doesn't show after installing it, try build-cmd to rebuild all commands.";
     }
-
-    public String callname = "lsc";
-
-    public String description = "lists all registered commands, if something doesn't show after installing it, try build-cmd to rebuild all commands.";
 
     @Override
     public void digestCommand(String message){
         int i = 0;
-        for(Command com : parentHandler.getCommandList() ){
+        for(Command com : CommandHandler.getCommandHandler().getCommandList() ){
             i++;
             Helpers.sendLocalMessage("[ " + i + " ] " + com.getCallname());
         }

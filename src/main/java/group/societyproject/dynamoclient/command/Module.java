@@ -1,5 +1,6 @@
 package group.societyproject.dynamoclient.command;
 
+import group.societyproject.dynamoclient.events.EventKillModules;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -21,6 +22,10 @@ public class Module {
         }
     }
 
+    public void toggleState(){
+        setState(!state);
+    }
+
     ///wether it is on or off
     protected boolean state = false;
 
@@ -32,5 +37,9 @@ public class Module {
         MinecraftForge.EVENT_BUS.unregister(this);
     }
 
+    @SubscribeEvent
+    public void eventKillModule(EventKillModules event){
+        setState(false);
+    }
 
 }
