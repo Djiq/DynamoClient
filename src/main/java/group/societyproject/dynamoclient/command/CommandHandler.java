@@ -7,6 +7,7 @@ import group.societyproject.dynamoclient.command.inbuilt_commands.CDynamo;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CHelp;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CListCommands;
 import group.societyproject.dynamoclient.command.inbuilt_commands.module_commands.CAutoCrystal;
+import group.societyproject.dynamoclient.command.inbuilt_commands.module_commands.CSprint;
 import group.societyproject.dynamoclient.events.EventKillModules;
 import group.societyproject.dynamoclient.util.Helpers;
 import group.societyproject.dynamoclient.util.Reference;
@@ -73,6 +74,7 @@ public class CommandHandler {
         commandList.add(new CDynamo());
         commandList.add(new CListCommands());
         commandList.add(new CAutoCrystal());
+        commandList.add(new CSprint());
     }
 
     public void KillModules(){
