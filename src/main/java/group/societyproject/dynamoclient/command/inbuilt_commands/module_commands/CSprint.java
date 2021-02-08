@@ -8,6 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.util.ArrayList;
+
 public class CSprint extends Command {
 
     private ModuleSprint module;
@@ -20,6 +22,11 @@ public class CSprint extends Command {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public ArrayList<String> getExtensiveDescription() {
+        return null;
     }
 
     public String callname = "sprint";

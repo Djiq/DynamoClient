@@ -8,6 +8,8 @@ import net.minecraft.launchwrapper.LogWrapper;
 import net.minecraft.util.text.TextComponentString;
 import scala.collection.parallel.ParIterableLike;
 
+import java.util.ArrayList;
+
 public class CHelp extends Command {
 
 
@@ -19,6 +21,11 @@ public class CHelp extends Command {
     @Override
     public String getDescription() {
         return "Shows you the description of the command";
+    }
+
+    @Override
+    public ArrayList<String> getExtensiveDescription() {
+        return null;
     }
 
     public void digestCommand(String message){

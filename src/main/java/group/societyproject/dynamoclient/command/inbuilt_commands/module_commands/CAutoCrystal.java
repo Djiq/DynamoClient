@@ -10,6 +10,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class CAutoCrystal extends Command {
@@ -24,6 +25,11 @@ public class CAutoCrystal extends Command {
     @Override
     public String getDescription() {
         return "Automatically places and destroys crystals";
+    }
+
+    @Override
+    public ArrayList<String> getExtensiveDescription() {
+        return null;
     }
 
     @Override
@@ -52,10 +58,17 @@ public class CAutoCrystal extends Command {
             Helpers.sendLocalMessage("Crystal aura was turned [off]");
         }
 
-        if(message.equals("range")){
-            String number_string = Helpers.emergeWord(message,false);
+        String word = Helpers.emergeWord(message,false);
+
+        if(word.equals("range")){
+            String number_string = Helpers.emergeWord(message,true).replaceAll("[^0-9]","");
+            System.out.println("1|" + number_string );
+            if(number_string.equals("")){
+                return;
+            }
+            System.out.println("2|" + number_string);
             module.range = Integer.parseInt(number_string);
-            Helpers.sendLocalMessage("Crystal aura range is now [" + String.valueOf(module.range) + "]");
+            Helpers.sendLocalMessage("Crystal aura range is now [" + number_string + "]");
         }
 
 

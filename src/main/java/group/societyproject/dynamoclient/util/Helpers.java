@@ -4,35 +4,34 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.launchwrapper.LogWrapper;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+
 import java.util.List;
 
 public class Helpers {
 
     public static String emergeWord(String message, boolean rest){
+        int place = message.indexOf(' ');
+        String retunrmsg;
 
-        char[] charArray = message.toCharArray();
+        if(place > 0){
+            if(rest){
+                retunrmsg =  message.substring(place+1);
+            } else {
 
-        int breakPlace = -1;
-        for(int i = 0; i < charArray.length;i++){
-            if(charArray[i] == ' '){
-                breakPlace = i;
+                retunrmsg = message.substring(0,place);
+            }
+            System.out.println(retunrmsg);
+            return retunrmsg;
+        } else {
+            if(rest){
+                return "";
+            } else {
+                return message;
             }
         }
 
-        String actual_command = "";
-        String rest_of_command = "";
-        if(breakPlace > 0) {
-            actual_command = message.substring(0, breakPlace);
-            rest_of_command = message.substring(breakPlace+1,message.length());
-        } else {
-            actual_command = message;
-        }
-        System.out.println(actual_command);
-        if(rest){
-            return rest_of_command;
-        } else {
-            return actual_command;
-        }
+
     }
 
     public static void sendRawMessage(String message){
@@ -48,7 +47,7 @@ public class Helpers {
     }
 
     public static String getDynamoPrefix() {
-        String message = "[ " + Minecraft.getMinecraft().player.getName() + "@DYNAMO ] ";
+        String message = TextFormatting.BLUE +  "[ " + Minecraft.getMinecraft().player.getName() + "@DYNAMO ] ";
         return message;
     }
 
@@ -60,12 +59,7 @@ public class Helpers {
 
     public static double[] LookAt(double xcord, double ycord, double zcord){
         EntityPlayer player = Minecraft.getMinecraft().player;
-        double[] vector = new double[3];
-
-        //normalize the vector
-        vector[0] = player.posX - xcord;
-        vector[1] = player.posY - ycord;
-        vector[2] = player.posZ - zcord;
+        double[] vector = {player.posX - xcord,player.posY - ycord,player.posZ - zcord};
 
         double len = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] );
 
@@ -73,15 +67,8 @@ public class Helpers {
             vector[i] /= len;
         }
 
-        //calculate pitch and yaw
-        double pitch = Math.asin(vector[1]);
-        double yaw = Math.atan2(vector[2], vector[0]);
-
-        //to degree
-        pitch = pitch * 180.0d / Math.PI;
-        yaw = yaw * 180.0d / Math.PI;
-
-        yaw += 90f;
+        double pitch = Math.asin(vector[1]) * 180.0d / Math.PI;
+        double yaw = Math.atan2(vector[2], vector[0]) * 180.0d / Math.PI + 90f;
 
         return new double[]{yaw,pitch};
     }
