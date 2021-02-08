@@ -47,7 +47,6 @@ public class CAutoCrystal extends Command {
 
         public int range = 4;
 
-        private long lastAttack = -1;
 
         @SubscribeEvent
         public void onTick(TickEvent.ClientTickEvent event){
@@ -60,7 +59,7 @@ public class CAutoCrystal extends Command {
 
             EntityPlayer player = Minecraft.getMinecraft().player;
 
-            if(some_crystal != null && player.getDistance(some_crystal) < range && ((System.nanoTime() / 1000000) - lastAttack ) >= 250 ){
+            if(some_crystal != null && player.getDistance(some_crystal) < range){
                 //double[] pitchnyaw = LookAt(some_crystal.posX,some_crystal.posY - 2.0d ,some_crystal.posZ);
                 //player.rotationYaw = (float) pitchnyaw[0];
                 //player.rotationPitch = (float) pitchnyaw[1];
@@ -68,7 +67,6 @@ public class CAutoCrystal extends Command {
 
                 Minecraft.getMinecraft().playerController.attackEntity(player,some_crystal);
                 player.swingArm(EnumHand.MAIN_HAND);
-                lastAttack = System.nanoTime() / 1000000;
             }
         }
 
