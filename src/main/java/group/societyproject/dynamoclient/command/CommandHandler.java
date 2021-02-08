@@ -6,9 +6,12 @@ import group.societyproject.dynamoclient.command.inbuilt_commands.CBuildCommandL
 import group.societyproject.dynamoclient.command.inbuilt_commands.CDynamo;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CHelp;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CListCommands;
+import group.societyproject.dynamoclient.command.inbuilt_commands.module_commands.CAutoCrystal;
+import group.societyproject.dynamoclient.events.EventKillModules;
 import group.societyproject.dynamoclient.util.Helpers;
 import group.societyproject.dynamoclient.util.Reference;
 import net.minecraftforge.client.event.ClientChatEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.xeustechnologies.jcl.JarClassLoader;
 import org.xeustechnologies.jcl.JclObjectFactory;
@@ -16,16 +19,23 @@ import org.xeustechnologies.jcl.JclObjectFactory;
 import java.util.*;
 
 public class CommandHandler {
-
-    public List<Command> getCommandList() {
-        return commandList;
-    }
-
     private List<Command> commandList;
+
+    private static CommandHandler instance;
 
     public CommandHandler(){
         super();
         BuildCommandList();
+        instance = this;
+
+    }
+
+    public static CommandHandler getCommandHandler() {
+        return instance;
+    }
+
+    public List<Command> getCommandList() {
+        return commandList;
     }
 
     @SubscribeEvent
@@ -57,33 +67,16 @@ public class CommandHandler {
     }
 
     public void BuildCommandList(){
-        initInbuiltCommands();
-        //TODO implement dynamic class loading
-        //How this is gonna work
-        //First we have to read a manifest file that details the name of the command class to load and the module id
-        //We then load that class using JCL
-        //We create the object and load it into array
-        //Hopefully this is gonna work
-        JarClassLoader jcl = new JarClassLoader();
-        jcl.add(String.valueOf(Reference.modFolder.resolve("commands")));
-        Map<String,Class> jclmap = jcl.getLoadedClasses();
-        Set jclset = jclmap.entrySet();
-        Iterator itr = jclset.iterator();
-        while(itr.hasNext()){
-            Map.Entry entry = (Map.Entry)itr.next();
-            Object some_class = entry.getValue();
-            if(some_class.getClass().isAssignableFrom(Command.class)){
-                Command newcommand = (Command)some_class;
-
-            }
-        }
-    }
-
-    public void initInbuiltCommands(){
         commandList = new LinkedList<Command>();
-        commandList.add(new CBuildCommandList(this));
-        commandList.add(new CHelp(this));
-        commandList.add(new CDynamo(this));
-        commandList.add(new CListCommands(this));
+        commandList.add(new CBuildCommandList());
+        commandList.add(new CHelp());
+        commandList.add(new CDynamo());
+        commandList.add(new CListCommands());
+        commandList.add(new CAutoCrystal());
     }
+
+    public void KillModules(){
+        MinecraftForge.EVENT_BUS.post(new EventKillModules());
+    }
+
 }

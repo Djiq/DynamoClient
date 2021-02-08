@@ -5,33 +5,25 @@ import group.societyproject.dynamoclient.command.CommandHandler;
 import group.societyproject.dynamoclient.util.Helpers;
 
 public class CDynamo extends Command {
-    public CDynamo(CommandHandler handler){
-        super(handler);
-    }
 
     @Override
     public String getCallname() {
-        return callname;
+        return "dynamo";
     }
 
     @Override
     public String getDescription() {
-        return description;
+        return "Prints DYNAMO to screen";
     }
 
-    public String callname = "dynamo";
-
-    public String description = "Prints DYNAMO to screen";
-
-    @Override
     public void digestCommand(String message){
-        Helpers.sendRawMessage("O-------------------------O");
-        Helpers.sendRawMessage("|  ##--#-#-###--#--#-#--#-  |");
-        Helpers.sendRawMessage("|  #-#-#-#-#-#-#-#-###-#-#  |");
-        Helpers.sendRawMessage("|  #-#--#--#-#-###-###-#-#  |");
-        Helpers.sendRawMessage("|  #-#--#--#-#-#-#-#-#-#-#  |");
-        Helpers.sendRawMessage("|  ##---#--#-#-#-#-#-#--#-  |");
-        Helpers.sendRawMessage("O-------------------------O");
+        Helpers.sendRawMessage("O------------------------------O");
+        Helpers.sendRawMessage("|  ##---#-#--###---#---#-#---#-  |");
+        Helpers.sendRawMessage("|  #-#--#-#--#-#--#-#--###--#-#  |");
+        Helpers.sendRawMessage("|  #-#---#---#-#--###--###--#-#  |");
+        Helpers.sendRawMessage("|  #-#---#---#-#--#-#--#-#--#-#  |");
+        Helpers.sendRawMessage("|  ##----#---#-#--#-#--#-#---#-  |");
+        Helpers.sendRawMessage("O------------------------------O");
     }
 }
 

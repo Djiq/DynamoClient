@@ -3,25 +3,12 @@ package group.societyproject.dynamoclient.command;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 
-public class Command {
+abstract public class Command {
 
-    public Command(CommandHandler handler){
-        super();
-        parentHandler = handler;
-    }
-    protected CommandHandler parentHandler;
+    abstract public String getCallname();
 
-    public String getCallname() {
-        return "";
-    }
+    abstract public String getDescription() ;
 
-    public String getDescription() {
-        return "";
-    }
-
-
-    public void digestCommand(String message){
-        System.out.println("parent");
-    }
+    abstract public void digestCommand(String message);
 
 }
