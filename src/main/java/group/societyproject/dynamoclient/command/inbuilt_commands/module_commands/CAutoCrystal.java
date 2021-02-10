@@ -15,7 +15,7 @@ import java.util.Comparator;
 
 public class CAutoCrystal extends Command {
 
-    public AutoCrystal module;
+    public CrystalAura module;
 
     @Override
     public String getCallname() {
@@ -35,7 +35,7 @@ public class CAutoCrystal extends Command {
     @Override
     public void digestCommand(String message) {
         if(module == null){
-            module = new AutoCrystal();
+            module = new CrystalAura();
         }
 
         if(message.equals("")){
@@ -74,7 +74,7 @@ public class CAutoCrystal extends Command {
 
     }
 
-    private class AutoCrystal extends Module{
+    private class CrystalAura extends Module{
 
         public int range = 4;
 

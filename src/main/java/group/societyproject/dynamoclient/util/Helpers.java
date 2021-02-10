@@ -1,11 +1,16 @@
 package group.societyproject.dynamoclient.util;
 
+import group.societyproject.dynamoclient.util.primitives.Primitive3D;
+import jdk.nashorn.internal.ir.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.launchwrapper.LogWrapper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Helpers {
@@ -72,5 +77,33 @@ public class Helpers {
 
         return new double[]{yaw,pitch};
     }
+
+    public static BlockPos[] GetBlocksInPrimitive(Primitive3D some_primitive){
+        int reach = some_primitive.getFurthestReach();
+        int fullReach = reach * 2;
+        Minecraft localMc = Minecraft.getMinecraft();
+        ArrayList<BlockPos> BlockArr = new ArrayList<BlockPos>();
+
+        BlockPos centre = some_primitive.getCenter();
+        BlockPos startPos = new BlockPos(centre.getX() - reach,centre.getY() - reach,centre.getZ() - reach );
+        BlockPos endPos = new BlockPos(centre.getX() + reach,centre.getY() + reach,centre.getZ() + reach );
+
+        for(int xiter = startPos.getX() ; xiter < endPos.getX() ; xiter++){
+
+            for(int yiter = startPos.getY() ; yiter < endPos.getY() ; yiter++){
+
+                for(int ziter = startPos.getZ() ; ziter < endPos.getZ() ; ziter++){
+
+                    BlockPos some_block = new BlockPos(xiter,yiter,ziter);
+                    if(some_primitive.isInPrimitive3D(some_block)){
+                        BlockArr.add(some_block);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
 
 }
