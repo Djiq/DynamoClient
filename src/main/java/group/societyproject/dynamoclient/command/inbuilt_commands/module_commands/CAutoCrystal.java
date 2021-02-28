@@ -2,30 +2,25 @@ package group.societyproject.dynamoclient.command.inbuilt_commands.module_comman
 
 import group.societyproject.dynamoclient.command.Command;
 import group.societyproject.dynamoclient.command.Module;
-import net.minecraft.advancements.ICriterionTrigger;
+import group.societyproject.dynamoclient.util.Helpers;
+import group.societyproject.dynamoclient.util.Reference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import scala.collection.parallel.ParIterableLike;
 
+import java.util.ArrayList;
 import java.util.Comparator;
-
-import static group.societyproject.dynamoclient.util.Helpers.LookAt;
 
 public class CAutoCrystal extends Command {
 
-    public AutoCrystal module;
+    public CrystalAura module;
 
     @Override
     public String getCallname() {
-        return "CrystalAura";
+        return "crystal-aura";
     }
 
     @Override
@@ -34,16 +29,53 @@ public class CAutoCrystal extends Command {
     }
 
     @Override
+    public ArrayList<String> getExtensiveDescription() {
+        return null;
+    }
+
+    @Override
     public void digestCommand(String message) {
         if(module == null){
-            module = new AutoCrystal();
+            module = new CrystalAura();
         }
 
-        module.toggleState();
+        if(message.equals("")){
+
+            module.toggleState();
+            if(module.isState()){
+                Helpers.sendLocalMessage("Crystal aura was toggled it is now [on] ");
+            } else {
+                Helpers.sendLocalMessage("Crystal aura was toggled it is now [off] ");
+            }
+        }
+
+        if(message.equals("on")){
+            module.setState(true);
+            Helpers.sendLocalMessage("Crystal aura was turned [on]");
+        }
+
+        if(message.equals("off")){
+            module.setState(false);
+            Helpers.sendLocalMessage("Crystal aura was turned [off]");
+        }
+
+        String word = Helpers.emergeWord(message,false);
+
+        if(word.equals("range")){
+            String number_string = Helpers.emergeWord(message,true).replaceAll("[^0-9]","");
+            System.out.println("1|" + number_string );
+            if(number_string.equals("")){
+                return;
+            }
+            System.out.println("2|" + number_string);
+            module.range = Integer.parseInt(number_string);
+            Helpers.sendLocalMessage("Crystal aura range is now [" + number_string + "]");
+        }
+
 
     }
 
-    private class AutoCrystal extends Module{
+    private class CrystalAura extends Module{
 
         public int range = 4;
 
@@ -54,10 +86,10 @@ public class CAutoCrystal extends Command {
                 return;
             }
 
-            EntityEnderCrystal some_crystal = Minecraft.getMinecraft().world.loadedEntityList.stream().filter(entity -> entity instanceof EntityEnderCrystal)
-                    .map(entity -> (EntityEnderCrystal) entity).min(Comparator.comparing(c -> Minecraft.getMinecraft().player.getDistance(c))).orElse(null);
+            EntityEnderCrystal some_crystal = Reference.mc.world.loadedEntityList.stream().filter(entity -> entity instanceof EntityEnderCrystal)
+                    .map(entity -> (EntityEnderCrystal) entity).min(Comparator.comparing(c -> Reference.mc.player.getDistance(c))).orElse(null);
 
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            EntityPlayer player = Reference.mc.player;
 
             if(some_crystal != null && player.getDistance(some_crystal) < range){
                 //double[] pitchnyaw = LookAt(some_crystal.posX,some_crystal.posY - 2.0d ,some_crystal.posZ);
@@ -65,7 +97,7 @@ public class CAutoCrystal extends Command {
                 //player.rotationPitch = (float) pitchnyaw[1];
 
 
-                Minecraft.getMinecraft().playerController.attackEntity(player,some_crystal);
+                Reference.mc.playerController.attackEntity(player,some_crystal);
                 player.swingArm(EnumHand.MAIN_HAND);
             }
         }

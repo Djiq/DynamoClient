@@ -4,6 +4,8 @@ import group.societyproject.dynamoclient.command.Command;
 import group.societyproject.dynamoclient.command.CommandHandler;
 import group.societyproject.dynamoclient.util.Helpers;
 
+import java.util.ArrayList;
+
 public class CBuildCommandList extends Command {
 
 
@@ -15,6 +17,11 @@ public class CBuildCommandList extends Command {
     @Override
     public String getDescription() {
         return "rebuilds the command list, forcing an update of available commands";
+    }
+
+    @Override
+    public ArrayList<String> getExtensiveDescription() {
+        return null;
     }
 
 

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.io.File;
 import java.nio.file.Path;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, useMetadata = true)
+@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION)
 public class Main {
 
 

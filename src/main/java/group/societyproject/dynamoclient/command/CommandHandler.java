@@ -1,20 +1,18 @@
 package group.societyproject.dynamoclient.command;
 
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableMap;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CBuildCommandList;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CDynamo;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CHelp;
 import group.societyproject.dynamoclient.command.inbuilt_commands.CListCommands;
 import group.societyproject.dynamoclient.command.inbuilt_commands.module_commands.CAutoCrystal;
+import group.societyproject.dynamoclient.command.inbuilt_commands.module_commands.CBind;
+import group.societyproject.dynamoclient.command.inbuilt_commands.module_commands.CSprint;
 import group.societyproject.dynamoclient.events.EventKillModules;
 import group.societyproject.dynamoclient.util.Helpers;
 import group.societyproject.dynamoclient.util.Reference;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.xeustechnologies.jcl.JarClassLoader;
-import org.xeustechnologies.jcl.JclObjectFactory;
 
 import java.util.*;
 
@@ -43,6 +41,7 @@ public class CommandHandler {
         String local_message = event.getOriginalMessage();
         if(local_message.startsWith(Reference.commandPrefix)){
             event.setCanceled(true);
+            Reference.mc.ingameGUI.getChatGUI().addToSentMessages(local_message);
             ParseMessage(local_message);
             return;
         }
@@ -73,6 +72,8 @@ public class CommandHandler {
         commandList.add(new CDynamo());
         commandList.add(new CListCommands());
         commandList.add(new CAutoCrystal());
+        commandList.add(new CSprint());
+        commandList.add(new CBind());
     }
 
     public void KillModules(){
