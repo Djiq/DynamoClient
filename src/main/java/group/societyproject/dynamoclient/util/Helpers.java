@@ -1,5 +1,6 @@
 package group.societyproject.dynamoclient.util;
 
+import group.societyproject.dynamoclient.util.filters.BlocksListFilter;
 import group.societyproject.dynamoclient.util.primitives.Primitive3D;
 import jdk.nashorn.internal.ir.Block;
 import net.minecraft.client.Minecraft;
@@ -40,8 +41,9 @@ public class Helpers {
     }
 
     public static void sendRawMessage(String message){
-        if (Minecraft.getMinecraft().player != null) {
-            Minecraft.getMinecraft().player.sendMessage(new TextComponentString(message));
+        if (Reference.mc.player != null) {
+            Reference.mc.player.sendMessage(new TextComponentString(message));
+
         } else {
             LogWrapper.info(message);
         }
@@ -52,18 +54,18 @@ public class Helpers {
     }
 
     public static String getDynamoPrefix() {
-        String message = TextFormatting.BLUE +  "[ " + Minecraft.getMinecraft().player.getName() + "@DYNAMO ] ";
+        String message = TextFormatting.BLUE +  "[ " + Reference.mc.player.getName() + "@DYNAMO ] ";
         return message;
     }
 
     public static List getTargetList(){
-        EntityPlayer player = Minecraft.getMinecraft().player;
-        List<EntityPlayer> player_list =  Minecraft.getMinecraft().world.playerEntities;
+        EntityPlayer player = Reference.mc.player;
+        List<EntityPlayer> player_list =  Reference.mc.world.playerEntities;
         return player_list;
     }
 
     public static double[] LookAt(double xcord, double ycord, double zcord){
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = Reference.mc.player;
         double[] vector = {player.posX - xcord,player.posY - ycord,player.posZ - zcord};
 
         double len = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] );
@@ -78,10 +80,10 @@ public class Helpers {
         return new double[]{yaw,pitch};
     }
 
-    public static BlockPos[] GetBlocksInPrimitive(Primitive3D some_primitive){
+    public static ArrayList<BlockPos> GetBlocksInPrimitive(Primitive3D some_primitive){
         int reach = some_primitive.getFurthestReach();
         int fullReach = reach * 2;
-        Minecraft localMc = Minecraft.getMinecraft();
+        Minecraft localMc = Reference.mc;
         ArrayList<BlockPos> BlockArr = new ArrayList<BlockPos>();
 
         BlockPos centre = some_primitive.getCenter();
@@ -102,7 +104,31 @@ public class Helpers {
             }
         }
 
-        return null;
+        return BlockArr;
+    }
+
+    public static ArrayList<BlockPos>  FilterBlocksArrayList(ArrayList<BlockPos> blocksList, BlocksListFilter filter){
+        ArrayList<BlockPos> newList = new ArrayList<BlockPos>();
+        for(BlockPos pos : blocksList){
+            if(filter.Filter(pos)){
+                newList.add(pos);
+            }
+        }
+
+        return newList;
+    }
+
+    //I have no clue how to access this function located in GuiScreen, until then this sits here.
+    public static void sendMessageAsPlayer(String msg) {
+
+       msg = net.minecraftforge.event.ForgeEventFactory.onClientSendMessage(msg);
+        if (msg.isEmpty()) return;
+
+        Reference.mc.ingameGUI.getChatGUI().addToSentMessages(msg);
+
+        if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(Reference.mc.player, msg) != 0) return;
+
+        Reference.mc.player.sendChatMessage(msg);
     }
 
 

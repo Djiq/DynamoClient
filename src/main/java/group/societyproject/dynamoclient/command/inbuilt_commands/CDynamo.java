@@ -25,6 +25,7 @@ public class CDynamo extends Command {
     }
 
 
+
     public void digestCommand(String message){
         Helpers.sendRawMessage( TextFormatting.BLUE +"O------------------------------O");
         Helpers.sendRawMessage( TextFormatting.BLUE +"|  ##---#-#--###---#---#-#---#-  |");

@@ -20,8 +20,12 @@ public class Reference{
 
     public static final String COMMON_PROXY_CLASS = "group.societyproject.dynamoclient.proxy.ProxyCommon";
 
-    public static Path modFolder = Minecraft.getMinecraft().mcDataDir.toPath().resolve("dynamo");
+    public static Minecraft mc = Minecraft.getMinecraft();
+
+    public static Path modFolder = mc.mcDataDir.toPath().resolve("dynamo");
 
     public static String commandPrefix = "=";
+
+
 
 }

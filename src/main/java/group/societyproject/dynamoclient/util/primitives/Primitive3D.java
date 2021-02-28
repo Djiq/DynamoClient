@@ -1,5 +1,6 @@
 package group.societyproject.dynamoclient.util.primitives;
 
+import group.societyproject.dynamoclient.util.Helpers;
 import net.minecraft.util.math.BlockPos;
 
 abstract public class Primitive3D {

@@ -3,6 +3,7 @@ package group.societyproject.dynamoclient.command.inbuilt_commands.module_comman
 import group.societyproject.dynamoclient.command.Command;
 import group.societyproject.dynamoclient.command.Module;
 import group.societyproject.dynamoclient.util.Helpers;
+import group.societyproject.dynamoclient.util.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,10 +86,10 @@ public class CAutoCrystal extends Command {
                 return;
             }
 
-            EntityEnderCrystal some_crystal = Minecraft.getMinecraft().world.loadedEntityList.stream().filter(entity -> entity instanceof EntityEnderCrystal)
-                    .map(entity -> (EntityEnderCrystal) entity).min(Comparator.comparing(c -> Minecraft.getMinecraft().player.getDistance(c))).orElse(null);
+            EntityEnderCrystal some_crystal = Reference.mc.world.loadedEntityList.stream().filter(entity -> entity instanceof EntityEnderCrystal)
+                    .map(entity -> (EntityEnderCrystal) entity).min(Comparator.comparing(c -> Reference.mc.player.getDistance(c))).orElse(null);
 
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            EntityPlayer player = Reference.mc.player;
 
             if(some_crystal != null && player.getDistance(some_crystal) < range){
                 //double[] pitchnyaw = LookAt(some_crystal.posX,some_crystal.posY - 2.0d ,some_crystal.posZ);
@@ -96,7 +97,7 @@ public class CAutoCrystal extends Command {
                 //player.rotationPitch = (float) pitchnyaw[1];
 
 
-                Minecraft.getMinecraft().playerController.attackEntity(player,some_crystal);
+                Reference.mc.playerController.attackEntity(player,some_crystal);
                 player.swingArm(EnumHand.MAIN_HAND);
             }
         }

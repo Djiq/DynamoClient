@@ -1,5 +1,6 @@
 package group.societyproject.dynamoclient.util.primitives;
 
+import group.societyproject.dynamoclient.util.Helpers;
 import net.minecraft.util.math.BlockPos;
 
 public class Sphere3D extends Primitive3D{
@@ -23,4 +24,5 @@ public class Sphere3D extends Primitive3D{
     public int getFurthestReach() {
         return radius;
     }
+
 }
